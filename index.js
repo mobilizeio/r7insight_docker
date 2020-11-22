@@ -4,6 +4,7 @@
 
 const allContainers = require("docker-allcontainers");
 const dns = require("dns");
+const dig = require("node-dig-dns");
 const eos = require("end-of-stream");
 const eventsFactory = require("docker-event-log");
 const logFactory = require("docker-loghose");
@@ -26,14 +27,17 @@ function connect(opts) {
 
   const endpoint = `${opts.region}${opts.server}`;
 
-  dns.lookup(endpoint, (err, address, family) => {
-    if (!err) {
-      LOGGER.debug(
-        `Successfully resolved DNS. address: "${address}" family: "${family}"`
-      );
-    } else {
-      LOGGER.error(`Failed to resolve DNS. error: ${err}`);
-    }
+  dig([endpoint]).then(result => {
+    console.log("Dig was successful!");
+    dns.lookup(endpoint, (err, address, family) => {
+      if (!err) {
+        LOGGER.debug(
+          `Successfully resolved DNS. address: "${address}" family: "${family}"`
+        );
+      } else {
+        LOGGER.error(`Failed to resolve DNS. error: ${err}`);
+      }
+    });
   });
 
   if (opts.secure) {

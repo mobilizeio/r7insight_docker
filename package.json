@@ -9,7 +9,7 @@
   "readme": "see [README.md](https://github.com/rapid7/r7insight_docker/blob/master/README.md)",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node index.js -r eu",
     "test": "mocha tests/**/test*.js --reporter spec"
   },
   "engines": {
@@ -25,6 +25,7 @@
     "docker-stats": "^0.9.0",
     "dockerode": "^3.0.2",
     "end-of-stream": "^1.4.4",
+    "node-dig-dns": "^0.2.12",
     "through2": "^3.0.1",
     "winston": "^3.3.3"
   },
